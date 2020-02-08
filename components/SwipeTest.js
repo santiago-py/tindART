@@ -1,15 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions, Image, Animated, PanResponder } from 'react-native';
+import { StyleSheet, Button, Text, View, Dimensions, Image, Animated, PanResponder, Alert } from 'react-native';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
 // import Icon from 'react-native-vector-icons/Ionicons'
 const Users = [
-  { id: "1", uri: require('../assets2/1.jpg') },
-  { id: "2", uri: require('../assets2/2.jpg') },
-  { id: "3", uri: require('../assets2/3.jpg') },
-  { id: "4", uri: require('../assets2/4.jpg') },
-  { id: "5", uri: require('../assets2/5.jpg') },
+  { id: "1", uri: require('../assets2/1.jpg'), desc: "blah1", title: "bleh1" },
+  { id: "2", uri: require('../assets2/2.jpg'), desc: "blah2", title: "bleh2" },
+  { id: "3", uri: require('../assets2/3.jpg'), desc: "blah3", title: "bleh3" },
+  { id: "4", uri: require('../assets2/4.jpg'), desc: "blah4", title: "bleh4" },
+  { id: "5", uri: require('../assets2/5.jpg'), desc: "blah5", title: "bleh5" },
 ]
 
 export default class SwipeTest extends React.Component {
@@ -120,11 +120,15 @@ export default class SwipeTest extends React.Component {
                   <Text style={{ borderWidth: 1, borderColor: 'red', color: 'red', fontSize: 32, fontWeight: '800', padding: 10 }}>NOPE</Text>
     
                 </Animated.View>
-    
+          
+                <Text>Title: {item.title}</Text>
+
                 <Image
                   style={{ flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 20 }}
                   source={item.uri} />
-    
+                
+                <Button title="INFO" onPress={() => Alert.alert(item.desc)}/> 
+
               </Animated.View>
             )
           }
@@ -147,10 +151,14 @@ export default class SwipeTest extends React.Component {
     
                 </Animated.View>
     
+                <Text>Title: {item.title}</Text>
+                
                 <Image
                   style={{ flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 20 }}
                   source={item.uri} />
-    
+                
+                <Button title="INFO" onPress={() => Alert.alert(item.desc)}/> 
+
               </Animated.View>
             )
           }
