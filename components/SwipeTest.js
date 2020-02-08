@@ -146,13 +146,13 @@ export default class SwipeTest extends React.Component {
 
                 </Animated.View>
 
-                <Text style={{fontStyle: 'normal' ,fontFamily: 'Futura', color: 'black', fontSize: 18, fontWeight: '800', padding: 10 }} > {item.title}</Text>
+                <Text style={{fontStyle: 'normal', color: 'black', fontSize: 18, fontWeight: '800', padding: 10 }} > {item.title}</Text>
 
                 <Image
                   style={{ flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 20 }}
                   source={item.uri} />
 
-                <Button title="INFO" onPress={() => Alert.alert("Test", item.desc)}/>
+                <Button title="INFO" onPress={() => Alert.alert(item.title, item.desc)}/>
 
               </Animated.View>
             )
@@ -176,13 +176,13 @@ export default class SwipeTest extends React.Component {
 
                 </Animated.View>
 
-                <Text style={{fontStyle: 'normal' ,fontFamily: 'Futura', color: 'black', fontSize: 18, fontWeight: '800', padding: 10 }} > {item.title}</Text>
+                <Text style={{fontStyle: 'normal', color: 'black', fontSize: 18, fontWeight: '800', padding: 10 }} > {item.title}</Text>
 
                 <Image
                   style={{ flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 20 }}
                   source={item.uri} />
 
-                <Button title="INFO" onPress={() => Alert.alert("Test", item.desc)}/>
+                <Button title="INFO" onPress={() => Alert.alert(item.title, item.desc)}/>
 
               </Animated.View>
             )
