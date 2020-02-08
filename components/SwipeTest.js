@@ -11,22 +11,7 @@ const Users = [
   { id: "3", uri: require('../assets2/3.jpg') },
   { id: "4", uri: require('../assets2/4.jpg') },
   { id: "5", uri: require('../assets2/5.jpg') },
-]
-
-updateFavorites(fav_id) {
-  async () => {
-    favorites = await AsyncStorage.getItem('Favorites');
-    if (favorites === undefined) {
-      favorites = Set();
-    }
-    favorites.add(fav_id);
-    try {
-      await AsyncStorage.setItem('Favorites', favorites);
-    } catch (error) {
-      console.log('Error Saving Favorite');
-    }
-  }
-}
+];
 
 
 export default class SwipeTest extends React.Component {
@@ -93,7 +78,8 @@ export default class SwipeTest extends React.Component {
               this.setState({ currentIndex: this.state.currentIndex + 1 }, () => {
                 this.position.setValue({ x: 0, y: 0 })
               })
-            })
+            });
+            updateFavorites(this.state.currentIndex);
           }
           else if (gestureState.dx < -120) {
             Animated.spring(this.position, {
@@ -127,7 +113,6 @@ export default class SwipeTest extends React.Component {
           return (
             <Animated.View
               {...this.PanResponder.panHandlers}
-              {...updateFavorites(item.id)}
               key={item.id} style={[this.rotateAndTranslate, { height: SCREEN_HEIGHT - 120, width: SCREEN_WIDTH, padding: 10, position: 'absolute' }]}>
               <Animated.View style={{ opacity: this.likeOpacity, transform: [{ rotate: '-30deg' }], position: 'absolute', top: 50, left: 40, zIndex: 1000 }}>
                 <Text style={{ borderWidth: 1, borderColor: 'green', color: 'green', fontSize: 32, fontWeight: '800', padding: 10 }}>LIKE</Text>

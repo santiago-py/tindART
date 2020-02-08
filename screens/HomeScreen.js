@@ -1,5 +1,7 @@
 import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
+import Favorites from '../components/Favorites.js';
+
 import {
   Image,
   Platform,
@@ -14,6 +16,7 @@ import { MonoText } from '../components/StyledText';
 
 export default function HomeScreen() {
   return (
+
     <View style={styles.container}>
       <ScrollView
         style={styles.container}
@@ -32,11 +35,13 @@ export default function HomeScreen() {
         <View style={styles.getStartedContainer}>
           <DevelopmentModeNotice />
 
-          <Text style={styles.getStartedText}>Get started by opening</Text>
+          <Text style={styles.getStartedText}></Text>
+          
 
           <View
             style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
             <MonoText>screens/HomeScreen.js</MonoText>
+            <Favorites/>
           </View>
 
           <Text style={styles.getStartedText}>
