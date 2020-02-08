@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Dimensions, Image, Animated, PanResponder } from 'react-native';
+import {AsyncStorage} from 'react-native';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
@@ -11,6 +12,22 @@ const Users = [
   { id: "4", uri: require('../assets2/4.jpg') },
   { id: "5", uri: require('../assets2/5.jpg') },
 ]
+
+updateFavorites(fav_id) {
+  async () => {
+    favorites = await AsyncStorage.getItem('Favorites');
+    if (favorites === undefined) {
+      favorites = Set();
+    }
+    favorites.add(fav_id);
+    try {
+      await AsyncStorage.setItem('Favorites', favorites);
+    } catch (error) {
+      console.log('Error Saving Favorite');
+    }
+  }
+}
+
 
 export default class SwipeTest extends React.Component {
 
@@ -59,123 +76,124 @@ export default class SwipeTest extends React.Component {
         })
     
       }
-      componentWillMount() {
-        this.PanResponder = PanResponder.create({
-    
-          onStartShouldSetPanResponder: (evt, gestureState) => true,
-          onPanResponderMove: (evt, gestureState) => {
-    
-            this.position.setValue({ x: gestureState.dx, y: gestureState.dy })
-          },
-          onPanResponderRelease: (evt, gestureState) => {
-    
-            if (gestureState.dx > 120) {
-              Animated.spring(this.position, {
-                toValue: { x: SCREEN_WIDTH + 100, y: gestureState.dy }
-              }).start(() => {
-                this.setState({ currentIndex: this.state.currentIndex + 1 }, () => {
-                  this.position.setValue({ x: 0, y: 0 })
-                })
+    componentWillMount() {
+      this.PanResponder = PanResponder.create({
+  
+        onStartShouldSetPanResponder: (evt, gestureState) => true,
+        onPanResponderMove: (evt, gestureState) => {
+  
+          this.position.setValue({ x: gestureState.dx, y: gestureState.dy })
+        },
+        onPanResponderRelease: (evt, gestureState) => {
+  
+          if (gestureState.dx > 120) {
+            Animated.spring(this.position, {
+              toValue: { x: SCREEN_WIDTH + 100, y: gestureState.dy }
+            }).start(() => {
+              this.setState({ currentIndex: this.state.currentIndex + 1 }, () => {
+                this.position.setValue({ x: 0, y: 0 })
               })
-            }
-            else if (gestureState.dx < -120) {
-              Animated.spring(this.position, {
-                toValue: { x: -SCREEN_WIDTH - 100, y: gestureState.dy }
-              }).start(() => {
-                this.setState({ currentIndex: this.state.currentIndex + 1 }, () => {
-                  this.position.setValue({ x: 0, y: 0 })
-                })
+            })
+          }
+          else if (gestureState.dx < -120) {
+            Animated.spring(this.position, {
+              toValue: { x: -SCREEN_WIDTH - 100, y: gestureState.dy }
+            }).start(() => {
+              this.setState({ currentIndex: this.state.currentIndex + 1 }, () => {
+                this.position.setValue({ x: 0, y: 0 })
               })
-            }
-            else {
-              Animated.spring(this.position, {
-                toValue: { x: 0, y: 0 },
-                friction: 4
-              }).start()
-            }
-          }
-        })
-      }
-    
-      renderUsers = () => {
-    
-        return Users.map((item, i) => {
-    
-    
-          if (i < this.state.currentIndex) {
-            return null
-          }
-          else if (i == this.state.currentIndex) {
-    
-            return (
-              <Animated.View
-                {...this.PanResponder.panHandlers}
-                key={item.id} style={[this.rotateAndTranslate, { height: SCREEN_HEIGHT - 120, width: SCREEN_WIDTH, padding: 10, position: 'absolute' }]}>
-                <Animated.View style={{ opacity: this.likeOpacity, transform: [{ rotate: '-30deg' }], position: 'absolute', top: 50, left: 40, zIndex: 1000 }}>
-                  <Text style={{ borderWidth: 1, borderColor: 'green', color: 'green', fontSize: 32, fontWeight: '800', padding: 10 }}>LIKE</Text>
-    
-                </Animated.View>
-    
-                <Animated.View style={{ opacity: this.dislikeOpacity, transform: [{ rotate: '30deg' }], position: 'absolute', top: 50, right: 40, zIndex: 1000 }}>
-                  <Text style={{ borderWidth: 1, borderColor: 'red', color: 'red', fontSize: 32, fontWeight: '800', padding: 10 }}>NOPE</Text>
-    
-                </Animated.View>
-    
-                <Image
-                  style={{ flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 20 }}
-                  source={item.uri} />
-    
-              </Animated.View>
-            )
+            })
           }
           else {
-            return (
-              <Animated.View
-    
-                key={item.id} style={[{
-                  opacity: this.nextCardOpacity,
-                  transform: [{ scale: this.nextCardScale }],
-                  height: SCREEN_HEIGHT - 120, width: SCREEN_WIDTH, padding: 10, position: 'absolute'
-                }]}>
-                <Animated.View style={{ opacity: 0, transform: [{ rotate: '-30deg' }], position: 'absolute', top: 50, left: 40, zIndex: 1000 }}>
-                  <Text style={{ borderWidth: 1, borderColor: 'green', color: 'green', fontSize: 32, fontWeight: '800', padding: 10 }}>LIKE</Text>
-    
-                </Animated.View>
-    
-                <Animated.View style={{ opacity: 0, transform: [{ rotate: '30deg' }], position: 'absolute', top: 50, right: 40, zIndex: 1000 }}>
-                  <Text style={{ borderWidth: 1, borderColor: 'red', color: 'red', fontSize: 32, fontWeight: '800', padding: 10 }}>NOPE</Text>
-    
-                </Animated.View>
-    
-                <Image
-                  style={{ flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 20 }}
-                  source={item.uri} />
-    
-              </Animated.View>
-            )
+            Animated.spring(this.position, {
+              toValue: { x: 0, y: 0 },
+              friction: 4
+            }).start()
           }
-        }).reverse()
-      }
-    
-      render() {
-        return (
-          <View style={{ flex: 1 }}>
-            <View style={{ height: 5 }}>
-    
-            </View>
-            <View style={{ flex: 1 }}>
-              {this.renderUsers()}
-            </View>
-            <View style={{ height: 60 }}>
-    
-            </View>
-    
-    
-          </View>
-    
-        );
-      }
+        }
+      })
     }
+    
+    renderUsers = () => {
+  
+      return Users.map((item, i) => {
+  
+  
+        if (i < this.state.currentIndex) {
+          return null
+        }
+        else if (i == this.state.currentIndex) {
+  
+          return (
+            <Animated.View
+              {...this.PanResponder.panHandlers}
+              {...updateFavorites(item.id)}
+              key={item.id} style={[this.rotateAndTranslate, { height: SCREEN_HEIGHT - 120, width: SCREEN_WIDTH, padding: 10, position: 'absolute' }]}>
+              <Animated.View style={{ opacity: this.likeOpacity, transform: [{ rotate: '-30deg' }], position: 'absolute', top: 50, left: 40, zIndex: 1000 }}>
+                <Text style={{ borderWidth: 1, borderColor: 'green', color: 'green', fontSize: 32, fontWeight: '800', padding: 10 }}>LIKE</Text>
+  
+              </Animated.View>
+  
+              <Animated.View style={{ opacity: this.dislikeOpacity, transform: [{ rotate: '30deg' }], position: 'absolute', top: 50, right: 40, zIndex: 1000 }}>
+                <Text style={{ borderWidth: 1, borderColor: 'red', color: 'red', fontSize: 32, fontWeight: '800', padding: 10 }}>NOPE</Text>
+  
+              </Animated.View>
+  
+              <Image
+                style={{ flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 20 }}
+                source={item.uri} />
+  
+            </Animated.View>
+          )
+        }
+        else {
+          return (
+            <Animated.View
+  
+              key={item.id} style={[{
+                opacity: this.nextCardOpacity,
+                transform: [{ scale: this.nextCardScale }],
+                height: SCREEN_HEIGHT - 120, width: SCREEN_WIDTH, padding: 10, position: 'absolute'
+              }]}>
+              <Animated.View style={{ opacity: 0, transform: [{ rotate: '-30deg' }], position: 'absolute', top: 50, left: 40, zIndex: 1000 }}>
+                <Text style={{ borderWidth: 1, borderColor: 'green', color: 'green', fontSize: 32, fontWeight: '800', padding: 10 }}>LIKE</Text>
+  
+              </Animated.View>
+  
+              <Animated.View style={{ opacity: 0, transform: [{ rotate: '30deg' }], position: 'absolute', top: 50, right: 40, zIndex: 1000 }}>
+                <Text style={{ borderWidth: 1, borderColor: 'red', color: 'red', fontSize: 32, fontWeight: '800', padding: 10 }}>NOPE</Text>
+  
+              </Animated.View>
+  
+              <Image
+                style={{ flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 20 }}
+                source={item.uri} />
+  
+            </Animated.View>
+          )
+        }
+      }).reverse()
+    }
+
+    render() {
+      return (
+        <View style={{ flex: 1 }}>
+          <View style={{ height: 5 }}>
+  
+          </View>
+          <View style={{ flex: 1 }}>
+            {this.renderUsers()}
+          </View>
+          <View style={{ height: 60 }}>
+  
+          </View>
+  
+  
+        </View>
+  
+      );
+      }
+  }
     
     const styles = StyleSheet.create({
       container: {
