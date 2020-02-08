@@ -152,7 +152,7 @@ export default class SwipeTest extends React.Component {
                   style={{ flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 20 }}
                   source={item.uri} />
 
-                <Button title="INFO" onPress={() => Alert.alert(item.desc)}/>
+                <Button title="INFO" onPress={() => Alert.alert("Test", item.desc)}/>
 
               </Animated.View>
             )
@@ -182,7 +182,7 @@ export default class SwipeTest extends React.Component {
                   style={{ flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 20 }}
                   source={item.uri} />
 
-                <Button title="INFO" onPress={() => Alert.alert(item.desc)}/>
+                <Button title="INFO" onPress={() => Alert.alert("Test", item.desc)}/>
 
               </Animated.View>
             )
