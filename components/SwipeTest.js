@@ -146,7 +146,7 @@ export default class SwipeTest extends React.Component {
 
                 </Animated.View>
 
-                <Text>Title: {item.title}</Text>
+                <Text style={{fontStyle: 'normal' ,fontFamily: 'Futura', color: 'black', fontSize: 18, fontWeight: '800', padding: 10 }} > {item.title}</Text>
 
                 <Image
                   style={{ flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 20 }}
@@ -176,7 +176,7 @@ export default class SwipeTest extends React.Component {
 
                 </Animated.View>
 
-                <Text>Title: {item.title}</Text>
+                <Text style={{fontStyle: 'normal' ,fontFamily: 'Futura', color: 'black', fontSize: 18, fontWeight: '800', padding: 10 }} > {item.title}</Text>
 
                 <Image
                   style={{ flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 20 }}
