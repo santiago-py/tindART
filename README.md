@@ -1,6 +1,6 @@
 # tindART
 
-We are cwru students. We are making tinder for art. Built for HackCWRU 2020. Built using React Native + Expo
+We are cwru students. We are making tinder for art. Built for HackCWRU 2020 in 24 hours. Built using React Native + Expo
 
 “Art washes away from the soul the dust of everyday life”
 ~ Pablo Picasso :older_man:
