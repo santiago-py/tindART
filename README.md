@@ -18,10 +18,10 @@ Art is presented to a viewer one piece at a time
 The user has time to look at the art and read about its origin and description
 User can then swipe right if they like the piece of art or left if they no not 
 
-![SS](https://imgur.com/DEYMPcq)
+![SS](https://i.imgur.com/DEYMPcq.png)
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* Shoutout to @Unsure Programmer (Youtube) for animations 
+* Images are from Cleveland Museum of Art Open Access (cc0), where "images are in the public domain... You can use them however you want." More on: https://www.clevelandart.org/open-access
+* CWRU
